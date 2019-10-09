@@ -1,4 +1,5 @@
-﻿var num=[],mynum=[],ans=[];
+﻿var debug = false;
+var num=[],mynum=[],ans=[];
 var tempi,tempj,lasti=-1,lastj=-1;
 var gameCanvas,context;
 var count;
@@ -20,7 +21,20 @@ function init(){
 	settingBtn.onclick=function(e){
 		showSetPanel();
 	}
+	show_rank = document.getElementById("show_rank");
+	show_rank.onclick=function(e){
+		showRankPanel();
+	}
+	setInterval(refreshTime, 1000);
 }	
+
+var playtime = 0;
+//计时
+function refreshTime(){
+	playtime ++;
+	usetime_1 = document.getElementById("usetime");
+	usetime_1.innerHTML = playtime;
+}
 
 function play(e){
 	var x=e.offsetX;
@@ -172,8 +186,9 @@ function add9num(e){
 			context.restore();
 			dateInit();
 			showMyNum();
-			if(isWin()){
-				alert("win");
+			if(debug || isWin()){
+				//alert("win");
+				showSetName();
 			}
 		}
 	}
@@ -243,6 +258,154 @@ function showSetPanel(){
 	}
 }
 
+function showRankPanel(){
+	rankPanel = document.getElementById("rankPanel");
+	rankPanel.style.display="block";
+	//加载排行数据
+	loadRankData();
+	//关闭
+	close_rank = document.getElementById("close_rank");
+	close_rank.onclick=function(){
+		rankPanel.style.display="none";
+	}
+	
+}
+
+//设置名字
+function showSetName(){
+	setNamePanel = document.getElementById("setNamePanel");
+	setNamePanel.style.display="block";
+	//取消
+	cancel = document.getElementById("input_name_cancel");
+	cancel.onclick=function(){
+		setNamePanel.style.display="none";
+	}
+	//确定
+	confirm = document.getElementById("input_name_confirm");
+	confirm.onclick=function(){
+		//获取名字
+		input_name = document.getElementById("input_name");
+		name = input_name.value;
+		if (isEmpty(name)) {
+			alert("请输入名字！")
+			return;
+		}
+		sendScore3(name);
+		//alert(name + ",time:"+playtime);
+		setNamePanel.style.display="none";
+		restart();
+	}
+}
+
+//字符串判空
+function isEmpty(obj){
+    if(typeof obj == "undefined" || obj == null || obj.length == ""){
+		console.log("no input")
+        return true;
+    }else if(obj.match(/^[ ]+$/)){
+		console.log("all space")
+        return true;
+    }else if(obj.match(/^\s+$/)){
+		console.log("all space or \\n")
+        return true;
+    }else{
+        return false;
+    }
+}
+
+//发送请求
+function sendScore(){
+	var xmlhttp;
+	if (window.XMLHttpRequest){
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	} else {
+		// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.withCredentials = true; // 设置运行跨域操作
+	xmlhttp.open("POST","http://139.224.13.102:89/insert",true);
+	xmlhttp.send("name=rs&usetime=32");
+	//监听服务端
+    xmlhttp.onreadystatechange=function () {
+		if (xmlhttp.readyState ==4 && xmlhttp.status ==200){
+			alert(xmlhttp.responseText);
+			alert(typeof xmlhttp.responseText)
+		} else {
+			alert("请求失败");
+		}
+	}
+}
+
+function sendScore2(){
+	console.log("33333333333");  
+	$.get("http://139.224.13.102:89/insert?name=rs&usetime=32",function(data,status){
+		alert("Data: " + data + "\nStatus: " + status);
+	});
+	
+	$.post("http://139.224.13.102:89/insert",{
+		name:"Donald Duck",
+		usrtime:23
+	},function(data,status){
+		alert("Data: " + data + "\nStatus: " + status);
+	});
+	
+	$.ajax({  
+		url : 'http://139.224.13.102:89/insert?name=rs&usetime=32',  
+		xhrFields: {  
+		withCredentials: true // 设置运行跨域操作  
+	},  
+	success : function(data) {  
+		console.log(data);  
+	}  
+	});
+  
+}
+
+function sendScore3(name) {     
+	$.ajax({          
+		type:  'GET',
+		url:   "http://139.224.13.102:89/insert?name=" + name + "&usetime=" + playtime,
+		dataType: 'script',              
+		success: function(res){
+			alert('上传成功');
+		}
+	 });
+}
+
+function loadRankData(){
+	$.ajax({          
+		type:  'GET',
+		url:   'http://139.224.13.102:89/rank',
+		dataType: 'jsonp',
+		jsonpCallback:"showData",
+		jsonpCallback: "handleCallback",        
+		success: function(res){
+			showData(res);
+		},
+		error: function(res){
+			console.log("error" + res.name);
+		}
+	 });
+}
+
+//回调函数
+ function showData (result) {
+	var data = JSON.stringify(result); //json对象转成字符串
+	console.log(data);
+
+	setNamePanel = document.getElementById("rank_content");
+	var content = "";
+	var lenght = result.length;
+	for(var i=0; i<lenght; i++) {
+		//console.log("name:" + result[i].name);
+		//console.log("time:" + result[i].usetime);
+		content = content + result[i].name + ":" + result[i].usetime + "<br />";
+		console.log(content);
+		setNamePanel.innerHTML = content;
+	}
+ }
+
 function restart(){
 	context.clearRect(0,0,450,450);
 	draw();
@@ -252,6 +415,7 @@ function restart(){
 		}
 	}
 	dateInit();
+	playtime = 0;
 }
 
 window.onload = function(){

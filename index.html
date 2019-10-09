@@ -7,10 +7,13 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/num.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
 </head>
 <body>
 
 	<img id="settingBtn" src="image/setting.jpg">
+	<p class="usetime_1" id="usetime">0</p>
+	<p class="usetime_2">s</p>
 	<div class="title">数独</div>
 	<canvas id = "gameCanvas" width="450px" height="450px">你的浏览器不支持canvas，请换个浏览器重试</canvas>
 	<canvas id = "numCanvas" width="450px" height="50px"></canvas>
@@ -34,9 +37,26 @@
 		</p>
 		<!--第2行-->
 		<p>背景音乐<img id="music_switch" src="image/off_music.jpg"></p>
+		<p id="show_rank">排行榜</p>
 		<!--第3行-->
 		<p><span id="confirm">确定</span>&nbsp &nbsp <span id="cancel">取消</span></p>
 	</div>
+	
+	<div id="setNamePanel">
+		<!--第1行-->
+		<p>输入你的名字：</p>
+		<input id="input_name"></input>
+		<!--第2行-->
+		<p><span id="input_name_confirm">确定</span>&nbsp; &nbsp; <span id="input_name_cancel">取消</span></p>
+	</div>
+	
+	<div id="rankPanel">
+		<!--第1行-->
+		<p id="rank_title">排行榜</p>
+		<p id="rank_content">aaaa</p>
+		<p id="close_rank">关闭</p>
+	</div>
+	
 	<audio id="audio" src="music/1.mp3"></audio>
 </body>
 </html>
