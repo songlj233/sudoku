@@ -1,0 +1,67 @@
+﻿canvas{
+	display:block;
+	margin:30px auto;
+	box-shadow:-2px -2px 2px #eee,5px 5px 5px #bbb;
+}
+body{
+	font-size: 28px;
+	color:#333;
+}
+.title{
+	margin-top:30px;
+	text-align:center;
+	font-size: 45px;
+}
+/*
+.head_move{
+	color:#e11;
+	font-family:黑体;
+	font-style:italic;
+	text-decoration:blink;
+}
+*/
+#settingBtn{
+	position: fixed;
+	top:30px;
+	right:30px;
+	height:30px;
+	width:30px;
+}
+/*
+父容器使用相对定位，子元素使用绝对定位后，
+这样子元素的位置不再相对于浏览器左上角，
+而是相对于父容器左上角
+*/
+#settingPanel{
+	padding-top:80px;
+	width:400px;
+	height:480px;
+	background:url("../image/setting_bg.jpg");
+	background-color:red;
+	background-size:100% 100%;
+	display:none;
+	position:relative;
+	margin:0 auto;
+	margin-top:-570px;
+	box-shadow:-2px -2px 2px #eee,5px 5px 5px #bbb;
+}
+
+#guanka,#degree{
+	background-color:#ccc;
+	font-size:25px
+}
+
+p{
+	text-align:center;
+}
+#confirm{
+	color:red;
+}
+#cancel{
+	color:blue;
+}
+#music_switch{
+	height:40px;
+	width:100px;
+	vertical-align:middle;
+}

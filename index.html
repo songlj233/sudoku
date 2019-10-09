@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>数独</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.65, minimum-scale=0.4, maximum-scale=1.0, user-scalable=yes"/>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/num.js"></script>
+</head>
+<body>
+
+	<img id="settingBtn" src="image/setting.jpg">
+	<div class="title">数独</div>
+	<canvas id = "gameCanvas" width="450px" height="450px">你的浏览器不支持canvas，请换个浏览器重试</canvas>
+	<canvas id = "numCanvas" width="450px" height="50px"></canvas>
+	<div id="settingPanel">
+		<!--第1行-->
+		<p>
+			难度 
+			<select id="degree">
+			   <option>简单</option>
+			   <option>一般</option>
+			   <option>困难</option>
+			</select>
+		</p>
+		<p>
+			关卡 
+			<select id="guanka">
+			   <option>1</option>
+			   <option>2</option>
+			   <option>3</option>
+			</select>
+		</p>
+		<!--第2行-->
+		<p>背景音乐<img id="music_switch" src="image/off_music.jpg"></p>
+		<!--第3行-->
+		<p><span id="confirm">确定</span>&nbsp &nbsp <span id="cancel">取消</span></p>
+	</div>
+	<audio id="audio" src="music/1.mp3"></audio>
+</body>
+</html>
