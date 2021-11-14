@@ -362,10 +362,10 @@ function sendScore2(){
   
 }
 
-function sendScore3(name) {     
+function sendScore3(name) {    
 	$.ajax({          
 		type:  'GET',
-		url:   "http://139.224.13.102:89/insert?name=" + name + "&usetime=" + playtime,
+		url:   "http://47.104.244.239:5000/api/insert/rsljme/143",
 		dataType: 'script',              
 		success: function(res){
 			alert('上传成功');
@@ -376,7 +376,7 @@ function sendScore3(name) {
 function loadRankData(){
 	$.ajax({          
 		type:  'GET',
-		url:   'http://139.224.13.102:89/rank',
+		url:   'http://47.104.244.239:5000/api/rank',
 		dataType: 'jsonp',
 		jsonpCallback:"showData",
 		jsonpCallback: "handleCallback",        
@@ -393,14 +393,14 @@ function loadRankData(){
  function showData (result) {
 	var data = JSON.stringify(result); //json对象转成字符串
 	console.log(data);
-
+	
 	setNamePanel = document.getElementById("rank_content");
 	var content = "";
-	var lenght = result.length;
+	var lenght = result.data.length;
 	for(var i=0; i<lenght; i++) {
 		//console.log("name:" + result[i].name);
 		//console.log("time:" + result[i].usetime);
-		content = content + result[i].name + ":" + result[i].usetime + "<br />";
+		content = content + result.data[i].name + ":" + result.data[i].score + "<br />";
 		console.log(content);
 		setNamePanel.innerHTML = content;
 	}
