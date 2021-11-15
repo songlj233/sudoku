@@ -365,7 +365,7 @@ function sendScore2(){
 function sendScore3(name) {    
 	$.ajax({          
 		type:  'GET',
-		url:   "http://47.104.244.239:5000/api/insert/rsljme/143",
+		url:   "http://47.104.244.239:5000/api/insert/" + name + "/" + playtime,
 		dataType: 'script',              
 		success: function(res){
 			alert('上传成功');
